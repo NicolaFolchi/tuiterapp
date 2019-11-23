@@ -4,7 +4,7 @@ export const renderSite = function () {
     $("#fixedbutton").on("click", postTweet);
     $("#tweetbutton").on("click", typeTweet);
     $("#submiteditbutton").on("click", submitEdit);
-    
+
 }
 
 async function renderTweet() {
@@ -48,7 +48,7 @@ async function renderTweet() {
                         <a  class="card-footer-item myEditButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Edit</a>
                         <a class="card-footer-item myDeleteButtons" data-id="${result.data[i]["id"]}">Delete</a>
                 </footer>
-            </div>`; 
+            </div>`;
         } else {
             tweets += `
             <br>
@@ -77,7 +77,7 @@ async function renderTweet() {
                         <a class="card-footer-item myRetweetButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Retweet ${result.data[i]["retweetCount"]} </a>
                         <a class="card-footer-item myReplyButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Reply ${result.data[i]["replyCount"]}</a>
                 </footer>
-            </div>`; 
+            </div>`;
         }
         // here I append each generated tweet to a div variable that would then be appended to the root
         tweets += `</div>`;
@@ -91,7 +91,7 @@ async function renderTweet() {
     $(".myRetweetButtons").on("click", retweetArea);
 }
 
-async function retweetTweet(event){
+async function retweetTweet(event) {
     // through this data attr I get the ID of the clicked card/tweet
     let x = event.target.getAttribute("data-card");
     // Getting the specific tweet to be then appended to the retweet
@@ -99,7 +99,7 @@ async function retweetTweet(event){
         method: 'get',
         url: 'https://comp426fa19.cs.unc.edu/a09/tweets/' + x,
         withCredentials: true,
-      });
+    });
     // getting the value of whatever the user wrote on the text area
     let message = $("#myretweetarea").val();
     let link = "https://comp426fa19.cs.unc.edu/a09/tweets/";
@@ -108,17 +108,17 @@ async function retweetTweet(event){
         url: link,
         withCredentials: true,
         data: {
-           "type": "retweet",
-           "parent": x,
-           // appending to the retweet whatever the user wants to comment plus the previous tweet body and author
-           "body": `${message}<br><strong>Retweet from:</strong> @${retweet.data["author"]}<p>${retweet.data["body"]}</p>`
+            "type": "retweet",
+            "parent": x,
+            // appending to the retweet whatever the user wants to comment plus the previous tweet body and author
+            "body": `${message}<br><strong>Retweet from:</strong> @${retweet.data["author"]}<p>${retweet.data["body"]}</p>`
         },
     });
     // clearing the body so we then render the 50 newest tweets
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
 }
-function retweetArea(event){
+function retweetArea(event) {
     // gets id of the specific clicked tweet
     let x = event.target.getAttribute("data-id");
     let tweetBody = event.target.getAttribute("data-text");
@@ -126,10 +126,10 @@ function retweetArea(event){
     // Therefore, if the id of that textarea does not exist; create one. if it does; remove it
     // this allows the button act as a toggle
     let tweetEditArea = document.getElementById("retweet_area_exists");
-    if (tweetEditArea){
+    if (tweetEditArea) {
         $("#retweet_area_exists").replaceWith("");
     }
-    else{ 
+    else {
         $("#" + x).append(`
         <div id="retweet_area_exists">
             <textarea class="textarea" id="myretweetarea" placeholder="what are you thinking?"></textarea>
@@ -140,7 +140,7 @@ function retweetArea(event){
     $("#submitretweetbutton").on("click", retweetTweet);
 }
 
-async function replyTweet(event){
+async function replyTweet(event) {
     // through this data attr I get the ID of the clicked card/tweet
     let x = event.target.getAttribute("data-card");
     // getting the value of whatever the user wrote on the text area
@@ -151,16 +151,16 @@ async function replyTweet(event){
         url: link,
         withCredentials: true,
         data: {
-           "type": "reply",
-           "parent": x,
-           "body": message
+            "type": "reply",
+            "parent": x,
+            "body": message
         },
     });
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
 }
 
-function replyArea(event){
+function replyArea(event) {
     // gets id of the specific clicked tweet
     let x = event.target.getAttribute("data-id");
     let tweetBody = event.target.getAttribute("data-text");
@@ -168,10 +168,10 @@ function replyArea(event){
     // Therefore, if the id of that textarea does not exist; create one. if it does; remove it
     // this allows the button act as a toggle
     let tweetEditArea = document.getElementById("reply_area_exists");
-    if (tweetEditArea){
+    if (tweetEditArea) {
         $("#reply_area_exists").replaceWith("");
     }
-    else{ 
+    else {
         $("#" + x).append(`
         <div id="reply_area_exists">
             <textarea class="textarea" id="myreplyarea" placeholder="what are you thinking?"></textarea>
@@ -182,13 +182,13 @@ function replyArea(event){
     $("#submitreplybutton").on("click", replyTweet);
 }
 
-async function likeToggle(event){
+async function likeToggle(event) {
     // gets id of the specific clicked tweet
     let x = event.target.getAttribute("data-id");
     // gets boolean regarding if the tweet is liked or not
     let isLiked = event.target.getAttribute("data-likeStatus");
     // if is not liked then update server and add tweet to liked tweets
-    if (isLiked == "false"){
+    if (isLiked == "false") {
         let link = "https://comp426fa19.cs.unc.edu/a09/tweets/" + x + "/like";
         const result = await axios({
             method: 'put',
@@ -204,11 +204,11 @@ async function likeToggle(event){
         });
     }
     // clearing the body so we then render the 50 newest tweets
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
 }
 
-async function deleteTweet(event){
+async function deleteTweet(event) {
     // gets id of the specific clicked tweet
     let x = event.target.getAttribute("data-id");
     let link = "https://comp426fa19.cs.unc.edu/a09/tweets/" + x;
@@ -218,7 +218,7 @@ async function deleteTweet(event){
         withCredentials: true,
     });
     // clearing the body so we then render the 50 newest tweets
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
 }
 
@@ -231,15 +231,15 @@ async function submitEdit(event) {
         url: link,
         withCredentials: true,
         data: {
-           "body": message,
+            "body": message,
         },
     });
     // clearing the body so we then render the 50 newest tweets
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
 }
 
-function editArea(event){
+function editArea(event) {
     let x = event.target.getAttribute("data-id");
     // getting the text that exists in the tweet to use it as a placeholder for the textarea
     let tweetBody = event.target.getAttribute("data-text");
@@ -247,10 +247,10 @@ function editArea(event){
     // Therefore, if the id of that textarea does not exist; create one. if it does; remove it
     // this allows the button act as a toggle
     let tweetEditArea = document.getElementById("edit_area_exists");
-    if (tweetEditArea){
+    if (tweetEditArea) {
         $("#edit_area_exists").replaceWith("");
     }
-    else{ 
+    else {
         $("#" + x).append(`
         <div id="edit_area_exists">
             <textarea class="textarea" id="myeditarea" placeholder="${tweetBody}"></textarea>
@@ -261,7 +261,7 @@ function editArea(event){
 }
 
 
-async function postTweet(){
+async function postTweet() {
     let message = $("#myarea").val();
     const result = await axios({
         method: 'post',
@@ -272,21 +272,21 @@ async function postTweet(){
         },
         withCredentials: true,
     });
-    document.getElementById("root").innerHTML ='';
+    document.getElementById("root").innerHTML = '';
     renderTweet();
     // hides the textarea after posting a tweet
     typeTweet();
 }
 
-function typeTweet(){
+function typeTweet() {
     // when the typearea div doesn't contain anything then append the textarea and button, if it does then clear it
-    if($("#typearea").is(':empty')){
+    if ($("#typearea").is(':empty')) {
         $("#typearea").append(`<textarea class="textarea" id="myarea" placeholder="what are you thinking?"></textarea>`);
         $("#tweetbuttondiv").append(`<button class="button is-success is-light" id="fixedbutton">Tweet</button>`);
     }
-    else{
-        document.getElementById("typearea").innerHTML ='';
-        document.getElementById("tweetbuttondiv").innerHTML ='';
+    else {
+        document.getElementById("typearea").innerHTML = '';
+        document.getElementById("tweetbuttondiv").innerHTML = '';
     }
     // listen for the post tweet button
     $("#fixedbutton").on("click", postTweet);
@@ -295,16 +295,16 @@ function typeTweet(){
 
 $(function () {
     renderSite();
-}); 
+});
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Check for click events on the navbar burger icon
-    $(".navbar-burger").click(function() {
+    $(".navbar-burger").click(function () {
         // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
         $(".navbar-burger").toggleClass("is-active");
         $(".navbar-menu").toggleClass("is-active");
     });
-  });
+});
 
 
   // --- TODO --- 
