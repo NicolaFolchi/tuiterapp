@@ -1,7 +1,8 @@
-let db = {
-    "dani": 10,
-    "nico": 10
-}
+let fs = require("fs");
+let binData = fs.readFileSync("data.js");
+let db = JSON.parse(binData);
+
+console.log(db);
 
 console.log("server is up and running");
 
@@ -27,7 +28,8 @@ function writeTuits(request, response) {
     let reply = {
         rep: "thank you for your input."
     }
-
+    let data = JSON.stringify(db, null, 2);
+    fs.writeFile("data.js", data);
     response.send(reply);
 }
 
