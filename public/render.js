@@ -265,7 +265,7 @@ async function postTweet() {
     let message = $("#myarea").val();
     const result = await axios({
         method: 'post',
-        url: 'https://comp426fa19.cs.unc.edu/a09/tweets',
+        url: 'http://localhost:3000/add',
         data: {
             "type": "tweet",
             "body": message
