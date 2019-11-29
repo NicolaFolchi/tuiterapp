@@ -102,7 +102,7 @@ async function retweetTweet(event) {
     });
     // getting the value of whatever the user wrote on the text area
     let message = $("#myretweetarea").val();
-    let link = "https://comp426fa19.cs.unc.edu/a09/tweets/";
+    let link = "http://localhost:3000/tuits";
     const result = await axios({
         method: 'post',
         url: link,
@@ -265,7 +265,7 @@ async function postTweet() {
     let message = $("#myarea").val();
     const result = await axios({
         method: 'post',
-        url: 'http://localhost:3000/add',
+        url: 'http://localhost:3000/tuits',
         data: {
             "type": "tweet",
             "body": message
