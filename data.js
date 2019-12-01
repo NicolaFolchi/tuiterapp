@@ -2,6 +2,19 @@
   {
     "type": "reply",
     "parent": "3klP9xyy",
+    "body": "reply 2<br><strong>Reply to:</strong> @Nico<p>post</p>",
+    "id": "hAqWxlFk",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-01T03:36:00.446Z"
+  },
+  {
+    "type": "reply",
+    "parent": "3klP9xyy",
     "body": "testing reply :3<br><strong>Reply to:</strong> @Nico<p>post</p>",
     "id": "9Iwdwpm1",
     "author": "Nico",
@@ -19,7 +32,7 @@
     "author": "Nico",
     "isLiked": false,
     "retweetCount": 0,
-    "replyCount": 1,
+    "replyCount": 2,
     "likeCount": 0,
     "someLikes": 0,
     "createdAt": "2019-12-01T03:06:37.142Z"
