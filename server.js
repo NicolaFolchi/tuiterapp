@@ -51,20 +51,25 @@ function makePost(request, response) {
 
     // adding needed properties to my tuits
     request.body['id'] = shortid.generate();
+    request.body['author'] = "Nico";
     request.body['isLiked'] = false;
     request.body['retweetCount'] = 0;
     request.body['replyCount'] = 0;
     request.body['likeCount'] = 0;
     request.body['someLikes'] = 0;
     request.body['createdAt'] = (new Date());
-    
-    console.log(db[1]);
+
 
     // CHECK FOR TYPE OF POST, IF RETWEET THEN INCREASE PARENT RETWEET COUNT
-    if (request.body['type'] == 'retweet'){
-        db[request.body['parent']]['retweetCount'] += 1;
+    if (request.body['type'] == 'retweet') {
+        for (let element = 0; element < db.length; element++) {
+            if (db[element]['id'] == request.body['parent']) {
+                db[element]['retweetCount'] += 1;
+            }
+        }
+        // db[request.body['parent']]['retweetCount'] += 1;
     }
-    if (request.body['type'] == 'reply'){
+    if (request.body['type'] == 'reply') {
         db[request.body['parent']]['replyCount'] += 1;
     }
     // adding as first element to json file

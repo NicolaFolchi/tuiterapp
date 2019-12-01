@@ -1,10 +1,34 @@
 [
   {
+    "type": "retweet",
+    "body": "testing retweet :( please work :(((((",
+    "parent": "f_7d0Rva",
+    "id": "B0r6w3A8",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-01T02:35:28.781Z"
+  },
+  {
+    "type": "tweet",
+    "body": "test for accessing a specific tuit body :(",
+    "id": "1rXpy98f",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-01T02:11:30.269Z"
+  },
+  {
     "type": "tweet",
     "body": "test for accessing the first element of the db :(",
     "id": "f_7d0Rva",
     "isLiked": false,
-    "retweetCount": 0,
+    "retweetCount": 1,
     "replyCount": 0,
     "likeCount": 0,
     "someLikes": 0,
