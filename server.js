@@ -57,8 +57,9 @@ function makePost(request, response) {
     request.body['likeCount'] = 0;
     request.body['someLikes'] = 0;
     request.body['createdAt'] = (new Date());
+    
+    console.log(db[1]);
 
-    db[request.body['id']] = request.body;
     // CHECK FOR TYPE OF POST, IF RETWEET THEN INCREASE PARENT RETWEET COUNT
     if (request.body['type'] == 'retweet'){
         db[request.body['parent']]['retweetCount'] += 1;
@@ -66,7 +67,8 @@ function makePost(request, response) {
     if (request.body['type'] == 'reply'){
         db[request.body['parent']]['replyCount'] += 1;
     }
-    // db['PARENT']['retweetCount'] += 1;
+    // adding as first element to json file
+    db.unshift(request.body);
     let data = JSON.stringify(db, null, 2);
     fs.writeFile("data.js", data, function (err, result) {
         if (err) console.log('error', err);
