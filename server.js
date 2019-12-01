@@ -24,6 +24,16 @@ app.use(bodyParser.json());
 
 app.get('/tuits', sendTuits);
 
+app.get('/tuits/:tuit', function(request, response){
+    let tuitID = request.params.tuit;
+    for (let i = 0; i < db.length; i++) {
+        if (db[i]['id'] == tuitID) {
+            response.send(db[i]);
+            break;
+        }
+    }
+})
+
 app.get('/tuits/:author/:msg', writeTuits);
 
 function writeTuits(request, response) {

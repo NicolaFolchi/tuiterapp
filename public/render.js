@@ -12,44 +12,44 @@ async function renderTweet() {
     // getting all tweets from the server
     const result = await axios({
         method: 'get',
-        url: 'https://comp426fa19.cs.unc.edu/a09/tweets',
+        url: 'http://localhost:3000/tuits',
         withCredentials: true,
     });
     // dynamically rendering all of the 50 newest tweets with their respective card provided by bulma
     let tweets = `<div id="tweets">`;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 5; i++) {
         // if I created this tweet, then:
-        if (result.data[i]["isMine"] == true) {
-            tweets += `
-            <br>
-            <div class="card" id="${result.data[i]["id"]}">
-                <div class="card-content">
-                    <div class="media">
-                    <div class="media-left">
-                        <figure class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <p class="title is-4">${result.data[i]["author"]}</p>
-                        <p class="subtitle is-6">@${result.data[i]["author"]}</p>
-                    </div>
-                </div>
+        // if (result.data[i]["isMine"] == true) {
+        //     tweets += `
+        //     <br>
+        //     <div class="card" id="${result.data[i]["id"]}">
+        //         <div class="card-content">
+        //             <div class="media">
+        //             <div class="media-left">
+        //                 <figure class="image is-48x48">
+        //                 <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+        //                 </figure>
+        //             </div>
+        //             <div class="media-content">
+        //                 <p class="title is-4">${result.data[i]["author"]}</p>
+        //                 <p class="subtitle is-6">@${result.data[i]["author"]}</p>
+        //             </div>
+        //         </div>
 
-                <div class="content">
-                    ${result.data[i]["body"]}
-                    <br>
-                    <p>${new Date(result.data[i]["createdAt"]).toLocaleDateString()}<p>
-                </div>
-                <footer class="card-footer">
-                        <a class="card-footer-item myLikeButtons" data-id="${result.data[i]["id"]}" data-likeStatus="${result.data[i]["isLiked"]}">Like ${result.data[i]["likeCount"]}</a>
-                        <a class="card-footer-item myRetweetButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Retweet ${result.data[i]["retweetCount"]} </a>
-                        <a class="card-footer-item myReplyButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Reply ${result.data[i]["replyCount"]}</a>
-                        <a  class="card-footer-item myEditButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Edit</a>
-                        <a class="card-footer-item myDeleteButtons" data-id="${result.data[i]["id"]}">Delete</a>
-                </footer>
-            </div>`;
-        } else {
+        //         <div class="content">
+        //             ${result.data[i]["body"]}
+        //             <br>
+        //             <p>${new Date(result.data[i]["createdAt"]).toLocaleDateString()}<p>
+        //         </div>
+        //         <footer class="card-footer">
+        //                 <a class="card-footer-item myLikeButtons" data-id="${result.data[i]["id"]}" data-likeStatus="${result.data[i]["isLiked"]}">Like ${result.data[i]["likeCount"]}</a>
+        //                 <a class="card-footer-item myRetweetButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Retweet ${result.data[i]["retweetCount"]} </a>
+        //                 <a class="card-footer-item myReplyButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Reply ${result.data[i]["replyCount"]}</a>
+        //                 <a  class="card-footer-item myEditButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Edit</a>
+        //                 <a class="card-footer-item myDeleteButtons" data-id="${result.data[i]["id"]}">Delete</a>
+        //         </footer>
+        //     </div>`;
+        // } else {
             tweets += `
             <br>
             <div class="card" id="${result.data[i]["id"]}">
@@ -78,7 +78,7 @@ async function renderTweet() {
                         <a class="card-footer-item myReplyButtons" data-id="${result.data[i]["id"]}" data-text="${result.data[i]["body"]}">Reply ${result.data[i]["replyCount"]}</a>
                 </footer>
             </div>`;
-        }
+        // }
         // here I append each generated tweet to a div variable that would then be appended to the root
         tweets += `</div>`;
     }
@@ -97,9 +97,10 @@ async function retweetTweet(event) {
     // Getting the specific tweet to be then appended to the retweet
     const retweet = await axios({
         method: 'get',
-        url: 'https://comp426fa19.cs.unc.edu/a09/tweets/' + x,
+        url: 'http://localhost:3000/tuits/' + x,
         withCredentials: true,
     });
+
     // getting the value of whatever the user wrote on the text area
     let message = $("#myretweetarea").val();
     let link = "http://localhost:3000/tuits";
@@ -143,9 +144,15 @@ function retweetArea(event) {
 async function replyTweet(event) {
     // through this data attr I get the ID of the clicked card/tweet
     let x = event.target.getAttribute("data-card");
+    // Getting the specific tweet to be then appended to the retweet
+    const reply = await axios({
+        method: 'get',
+        url: 'http://localhost:3000/tuits/' + x,
+        withCredentials: true,
+    });
     // getting the value of whatever the user wrote on the text area
     let message = $("#myreplyarea").val();
-    let link = "https://comp426fa19.cs.unc.edu/a09/tweets/";
+    let link = "http://localhost:3000/tuits";
     const result = await axios({
         method: 'post',
         url: link,
@@ -153,7 +160,8 @@ async function replyTweet(event) {
         data: {
             "type": "reply",
             "parent": x,
-            "body": message
+            // appending to the reply whatever the user wants to comment plus the previous tweet body and author
+            "body": `${message}<br><strong>Reply to:</strong> @${reply.data["author"]}<p>${reply.data["body"]}</p>`
         },
     });
     document.getElementById("root").innerHTML = '';
