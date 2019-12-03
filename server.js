@@ -148,9 +148,10 @@ app.post('/login', async function (request, response) {
     if (username != null) {
         try {
             if (await bcrypt.compare(request.body.password, username.password)) {
-                response.send('Success, you are now logged in');
+                response.status(200).send('Success, you are now logged in');
+
             } else {
-                response.send('Failed to log in, password incorrect');
+                response.status(400).send('Failed to log in, password incorrect');
             }
         } catch {
             response.status(500).send();

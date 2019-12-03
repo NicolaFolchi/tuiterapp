@@ -8,10 +8,19 @@ function login() {
 
   let username = $("#userarea").val();
   let userpassword = $("#passwordarea").val();
-  let data = { "user": username, "password": userpassword };
-  console.log(JSON.stringify(data));
+  let fName = $("#fname").val();
+  let lName = $("#lname").val();
+  let email = $("#email").val();
+  let data = { 
+    "user": username,
+    "password": userpassword ,
+    "fName": fName,
+    "lName": lName,
+    "email": email
+  };
+
   $.ajax({
-    url: 'http://localhost:3000/login',
+    url: 'http://localhost:3000/users',
     type: 'POST',
     data: JSON.stringify(data),
     contentType: "application/json; charset=utf-8",
@@ -25,10 +34,10 @@ function login() {
       // ------------------- ERROR SPOTTED: -----------------------------
       // IT IS NOT ABLE TO VERIFY THE PASSWORD, ONLY THE USERNAME
       console.log(data.status);
-      if (data.status == 200) {
-        $message.html('<span class="has-text-success">Success! You are now logged in.</span>');
+      if (data.status == 201) {
+        $message.html('<span class="has-text-success">Success! You have signed up successfully.</span>');
         setTimeout(function () {
-          window.location = '/';
+          window.location = '/login/index.html';
         }, 2000);
       } else {
         console.log(data);
