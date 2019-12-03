@@ -7,6 +7,5 @@ I created a twitter re-make app that is supported with a UNC Computer Science ba
 
 TODOS:
 
-Create my backend server so the application will sustain by itself (in progress)
-Develop the login/register capability.
+Create my backend server so the application will sustain by itself and develop the login/register capability (in progress). 
 Publish and host the application.
