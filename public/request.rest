@@ -1,0 +1,21 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "user": "Niibui",
+    "password": "ewfwfwefwef",
+    "fName": "Nicola",
+    "lName": "Folchi",
+    "email": "n@hotmail.com"
+}
+
+###
+
+GET http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "user": "Nico",
+    "password": "hola"
+}
+

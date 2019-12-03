@@ -1,17 +1,21 @@
 let fs = require("fs");
 let binData = fs.readFileSync("data.js");
+let usrsData = fs.readFileSync('users.js');
 let db = JSON.parse(binData);
+let usrsDB = JSON.parse(usrsData);
 
 console.log(db);
 
 console.log("server is up and running");
 
 let express = require("express");
+let app = express();
 // used to parse the request body
 let bodyParser = require("body-parser");
 // used for the creation of unique id's for tuiter posts
 const shortid = require('shortid');
-let app = express();
+
+const bcrypt = require('bcryptjs');
 
 let server = app.listen(3000, () => {
     console.log('we out heree');
@@ -24,7 +28,7 @@ app.use(bodyParser.json());
 
 app.get('/tuits', sendTuits);
 
-app.get('/tuits/:tuit', function(request, response){
+app.get('/tuits/:tuit', function (request, response) {
     let tuitID = request.params.tuit;
     for (let i = 0; i < db.length; i++) {
         if (db[i]['id'] == tuitID) {
@@ -78,6 +82,7 @@ function makePost(request, response) {
             }
         }
     }
+
     if (request.body['type'] == 'reply') {
         for (let i = 0; i < db.length; i++) {
             if (db[i]['id'] == request.body['parent']) {
@@ -100,3 +105,58 @@ function sendTuits(request, response) {
     response.send(db);
 
 }
+
+app.post("/users", async function (request, response) {
+    let checkExistingUsername = usrsDB.find(user => user.username == request.body.user);
+    let checkExistingEmail = usrsDB.find(user => user.emailAddress == request.body.email);
+    if (checkExistingUsername != null){
+        return response.status(400).send("Username/email is being used :(");
+    }
+    if (checkExistingEmail != null){
+        return response.status(400).send("Email is being used :(");
+    }
+    try {
+        let username = request.body.user;
+        let password = await bcrypt.hash(request.body.password, 10);
+        let fName = request.body.fName;
+        let lName = request.body.lName;
+        let email = request.body.email;
+        let userData = {
+            username: username,
+            password: password,
+            firstName: fName,
+            lastName: lName,
+            emailAddress: email
+        };
+
+        console.log(userData);
+        // adding as first element to json file
+        usrsDB.unshift(userData);
+        let data = JSON.stringify(usrsDB, null, 2);
+        fs.writeFile("users.js", data, function (err, result) {
+            if (err) console.log('error', err);
+        });
+        response.status(201).send();
+
+    } catch {
+        response.status(500).send();
+    }
+});
+
+app.get('/login', async function (request, response) {
+    let username = usrsDB.find(user => user.user === request.body.user);
+    if (username != null) {
+        try {
+            if (await bcrypt.compare(request.body.password, username.password)) {
+                response.send('Success, you are now logged in');
+            } else {
+                response.send('Failed to log in, password incorrect');
+            }
+        } catch {
+            response.status(500).send();
+        }
+    }
+    else {
+        return response.status(404).send('User not found');
+    }
+})
