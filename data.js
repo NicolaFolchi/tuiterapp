@@ -1,5 +1,17 @@
 [
   {
+    "type": "tweet",
+    "body": "weff",
+    "id": "JOvbwa1m",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-03T05:17:22.175Z"
+  },
+  {
     "type": "reply",
     "parent": "7jczyudu",
     "body": "byeeeeeeeeeeeeeeeee<br><strong>Reply to:</strong> @Nico<p>heyyyyyyyyyyyyyyyyyyyyy<br><strong>Retweet from:</strong> @Nico<p>yooooooooooooooooooooooooooooo</p></p>",

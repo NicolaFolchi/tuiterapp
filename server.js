@@ -22,7 +22,7 @@ let server = app.listen(3000, () => {
 });
 
 // this allows me to have express look into a folder 'public' and retrieve static files (html, imgs)
-app.use(express.static("public/"));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -143,7 +143,7 @@ app.post("/users", async function (request, response) {
     }
 });
 
-app.get('/login', async function (request, response) {
+app.post('/login', async function (request, response) {
     let username = usrsDB.find(user => user.username === request.body.user);
     if (username != null) {
         try {
