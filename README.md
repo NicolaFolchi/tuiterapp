@@ -7,7 +7,7 @@ I created a twitter re-make app that is supported with a UNC Computer Science ba
 
 TODOS:
 
-<del>Create my backend server so the application will sustain by itself and develop the login/register capability. </del>
-Prevent unauthorized users to access the application through the main url route.
-keep sessions active for a period of time (cookie management).
-Publish and host the application.
+- <del>Create my backend server so the application will sustain by itself and develop the login/register capability. </del>
+- Prevent unauthorized users to access the application through the main url route.
+- Keep sessions active for a period of time (cookie management).
+- Publish and host the application.
