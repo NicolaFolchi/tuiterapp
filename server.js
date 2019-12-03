@@ -144,7 +144,7 @@ app.post("/users", async function (request, response) {
 });
 
 app.get('/login', async function (request, response) {
-    let username = usrsDB.find(user => user.user === request.body.user);
+    let username = usrsDB.find(user => user.username === request.body.user);
     if (username != null) {
         try {
             if (await bcrypt.compare(request.body.password, username.password)) {
