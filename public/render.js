@@ -17,7 +17,7 @@ async function renderTweet() {
     });
     // dynamically rendering all of the 50 newest tweets with their respective card provided by bulma
     let tweets = `<div id="tweets">`;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
         // if I created this tweet, then:
         // if (result.data[i]["isMine"] == true) {
         //     tweets += `

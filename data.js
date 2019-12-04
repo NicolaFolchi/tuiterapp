@@ -1,6 +1,43 @@
 [
   {
     "type": "tweet",
+    "body": " mhhjh",
+    "id": "NWMcBazV",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-03T20:18:16.713Z"
+  },
+  {
+    "type": "reply",
+    "parent": "Tp1bAyi5",
+    "body": "gjgkkh<br><strong>Reply to:</strong> @Nico<p>ytjuttjut</p>",
+    "id": "-cpfkpGb",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-03T19:47:51.099Z"
+  },
+  {
+    "type": "tweet",
+    "body": "ytjuttjut",
+    "id": "Tp1bAyi5",
+    "author": "Nico",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 1,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-03T19:42:19.046Z"
+  },
+  {
+    "type": "tweet",
     "body": "weff",
     "id": "JOvbwa1m",
     "author": "Nico",

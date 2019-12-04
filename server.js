@@ -4,7 +4,7 @@ let usrsData = fs.readFileSync('users.js');
 let db = JSON.parse(binData);
 let usrsDB = JSON.parse(usrsData);
 
-console.log(db);
+// console.log(db);
 
 console.log("server is up and running");
 
@@ -97,7 +97,7 @@ function makePost(request, response) {
         if (err) console.log('error', err);
     });
 
-    console.log(reply);
+    // console.log(reply);
     response.send(reply);
 }
 
@@ -109,10 +109,10 @@ function sendTuits(request, response) {
 app.post("/users", async function (request, response) {
     let checkExistingUsername = usrsDB.find(user => user.username == request.body.user);
     let checkExistingEmail = usrsDB.find(user => user.emailAddress == request.body.email);
-    if (checkExistingUsername != null){
+    if (checkExistingUsername != null) {
         return response.status(400).send("Username/email is being used :(");
     }
-    if (checkExistingEmail != null){
+    if (checkExistingEmail != null) {
         return response.status(400).send("Email is being used :(");
     }
     try {
@@ -129,7 +129,7 @@ app.post("/users", async function (request, response) {
             emailAddress: email
         };
 
-        console.log(userData);
+        // console.log(userData);
         // adding as first element to json file
         usrsDB.unshift(userData);
         let data = JSON.stringify(usrsDB, null, 2);
@@ -160,4 +160,54 @@ app.post('/login', async function (request, response) {
     else {
         return response.status(404).send('User not found');
     }
-})
+});
+
+// --------------- SPOTIFY API ---------------------------
+
+const request = require('request');
+const client_id = 'af2ce6ca8d05496ebde76dff70598354';
+const client_secret = 'f0e685f8afc441d6954d0321d73698e3';
+
+// your application requests authorization
+let authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+    },
+    form: {
+        grant_type: 'client_credentials'
+    },
+    json: true
+};
+
+app.get('/getToken', function (req, res) {
+    request.post(authOptions, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+
+            // use the access token to access the Spotify Web API
+            let token = body.access_token;
+            res.send(token);
+        }
+    });
+});
+// app.post('/tuitts', function (req, res) {
+//     request.post(authOptions, function (error, response, body) {
+//         if (!error && response.statusCode === 200) {
+
+//             // use the access token to access the Spotify Web API
+//             let token = body.access_token;
+//             let options = {
+//                 url: `https://api.spotify.com/v1/albums/${req.body.albumid}`,
+//                 headers: {
+//                     'Authorization': 'Bearer ' + token
+//                 },
+//                 json: true
+//             };
+//             console.log(req.body.albumid);
+//             // console.log(body);
+//             request.get(options, function (error, response, body) {
+//                 console.log(body);
+//             });
+//         }
+//     });
+// });
