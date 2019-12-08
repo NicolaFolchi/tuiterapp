@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+
 let fs = require("fs");
 let binData = fs.readFileSync("data.js");
 let usrsData = fs.readFileSync('users.js');
@@ -17,6 +21,17 @@ const shortid = require('shortid');
 
 const bcrypt = require('bcryptjs');
 
+const passport = require('passport');
+const initPassport = require('./passport-config');
+const flash = require('express-flash');
+const session = require('express-session');
+
+initPassport(
+    passport,
+    userID => usrsDB.find(user => user.username === userID),
+    id => usrsDB.find(user => user.id === id)
+    );
+
 let server = app.listen(3000, () => {
     console.log('we out heree');
 });
@@ -25,6 +40,15 @@ let server = app.listen(3000, () => {
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(flash());
+app.use(session({
+    secret: 'test',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // sending all of our posts data
 app.get('/tuits', function (request, response) {
@@ -46,10 +70,10 @@ app.post('/tuits', function (request, response) {
         status: 'success',
         tuitData: request.body
     };
-
+    console.log(request.user);
     // adding needed properties to my tuits
     request.body['id'] = shortid.generate();
-    request.body['author'] = "Nico";
+    request.body['author'] = request.user.firstName;
     request.body['isLiked'] = false;
     request.body['retweetCount'] = 0;
     request.body['replyCount'] = 0;
@@ -124,6 +148,12 @@ app.post("/users", async function (request, response) {
         response.status(500).send();
     }
 });
+// app.post('/login', passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+// }))
+
 // login process and user authorization
 app.post('/login', async function (request, response) {
     let username = usrsDB.find(user => user.username === request.body.user);

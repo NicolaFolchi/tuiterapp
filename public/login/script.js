@@ -9,7 +9,15 @@ function login() {
   let username = $("#userarea").val();
   let userpassword = $("#passwordarea").val();
   let data = { "user": username, "password": userpassword };
-  console.log(JSON.stringify(data));
+  // const httpreq = async function () {
+  //   let result = await axios({
+  //     method: 'post',
+  //     url: 'http://localhost:3000/login',
+  //     data: data,
+  //     withCredentials: true,
+  //   });
+  // }
+
   $.ajax({
     url: 'http://localhost:3000/login',
     type: 'POST',
