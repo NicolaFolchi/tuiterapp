@@ -8,7 +8,7 @@ I created a twitter re-make app that is supported with a UNC Computer Science ba
 TODOS:
 
 - <del>Create my backend server so the application will sustain by itself and develop the login/register capability. </del>
-- Prevent unauthorized users to access the application through the main url route.
+- <del>Restrict non-logged-in users to access all routes. </del>
 - Add routes for deleting own posts.
 - <del>Keep sessions active for a period of time (cookie management).</del>
 - <del>Implement password stretching.</del> (stretched for 300 ms.)
