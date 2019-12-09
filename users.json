@@ -1,5 +1,12 @@
 [
   {
+    "username": "test for confirm password",
+    "password": "$2a$10$0yahNeueN97S/eeJIl9ytOwBt9kJvHI9R2rykhyYzAOc92BAxJn3.",
+    "firstName": "test",
+    "lastName": "test ",
+    "emailAddress": "jnwrfnwnf"
+  },
+  {
     "username": "Nico :)",
     "password": "$2a$10$CgEQZOZxw6S.lemGcoBi8eAxCoqpBxLaEKEtQSGhMNCblSh1J8YS.",
     "firstName": "Nico",

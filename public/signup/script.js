@@ -8,9 +8,14 @@ function login() {
 
   let username = $("#userarea").val();
   let userpassword = $("#passwordarea").val();
+  let userConfirmPassword = $("#confirmpasswordarea").val();
   let fName = $("#fname").val();
   let lName = $("#lname").val();
   let email = $("#email").val();
+
+  if (userpassword !== userConfirmPassword){
+    return $message.html(`<span class="has-text-danger">Your passwords must match  >:(</span>`);
+  }
   let data = { 
     "user": username,
     "password": userpassword ,
@@ -18,6 +23,7 @@ function login() {
     "lName": lName,
     "email": email
   };
+
 
   $.ajax({
     url: 'http://localhost:3000/users',
