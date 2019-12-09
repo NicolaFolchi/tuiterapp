@@ -3,8 +3,8 @@ if (process.env.NODE_ENV !== 'production'){
 }
 
 let fs = require("fs");
-let binData = fs.readFileSync("data.js");
-let usrsData = fs.readFileSync('users.js');
+let binData = fs.readFileSync("data.json");
+let usrsData = fs.readFileSync('users.json');
 let db = JSON.parse(binData);
 let usrsDB = JSON.parse(usrsData);
 
@@ -19,18 +19,18 @@ let bodyParser = require("body-parser");
 // used for the creation of unique id's for tuiter posts
 const shortid = require('shortid');
 
+const User = require('./models/user').User;
+
+
 const bcrypt = require('bcryptjs');
-
-const passport = require('passport');
-const initPassport = require('./passport-config');
-const flash = require('express-flash');
 const session = require('express-session');
+const passport = require('passport');
 
-initPassport(
-    passport,
-    userID => usrsDB.find(user => user.username === userID),
-    id => usrsDB.find(user => user.id === id)
-    );
+// initPassport(
+//     passport,
+//     userID => usrsDB.find(user => user.username === userID),
+//     id => usrsDB.find(user => user.id === id)
+//     );
 
 let server = app.listen(3000, () => {
     console.log('we out heree');
@@ -41,7 +41,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(flash());
+
 app.use(session({
     secret: 'test',
     resave: false,
@@ -101,7 +101,7 @@ app.post('/tuits', function (request, response) {
     // adding as first element to json file
     db.unshift(request.body);
     let data = JSON.stringify(db, null, 2);
-    fs.writeFile("data.js", data, function (err, result) {
+    fs.writeFile("data.json", data, function (err, result) {
         if (err) console.log('error', err);
     });
 
@@ -137,9 +137,14 @@ app.post("/users", async function (request, response) {
         // adding as first element to json file
         usrsDB.unshift(userData);
         let data = JSON.stringify(usrsDB, null, 2);
-        fs.writeFile("users.js", data, function (err, result) {
+        fs.writeFile("users.json", data, function (err, result) {
             if (err) console.log('error', err);
         });
+        // creating user on mongodb
+        let user = new User(userData);
+        user.save(function (){
+            console.log('todo bien');
+        })
         // created
         response.status(201).send();
 
@@ -148,11 +153,6 @@ app.post("/users", async function (request, response) {
         response.status(500).send();
     }
 });
-// app.post('/login', passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-// }))
 
 // login process and user authorization
 app.post('/login', async function (request, response) {
@@ -162,6 +162,9 @@ app.post('/login', async function (request, response) {
             // comparing our stored hashed password with the password the user is trying to log in with
             if (await bcrypt.compare(request.body.password, username.password)) {
                 response.status(200).send('Success, you are now logged in');
+                User.find(function(err,doc){
+                    console.log(doc);
+                })
 
             } else {
                 response.status(400).send('Failed to log in, password incorrect');

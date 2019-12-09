@@ -1,5 +1,19 @@
 [
   {
+    "username": "Test77",
+    "password": "$2a$10$uyQIH9zG9fw9kJQE/lX3Fe8annAyYbR.Am3bOH2L7EpKOS7/2.edW",
+    "firstName": "Test7",
+    "lastName": "Test7",
+    "emailAddress": "please@work.cowm"
+  },
+  {
+    "username": "Test",
+    "password": "$2a$10$.oGgIXks0tLZeIoEXdi96u8Pnw1.RZTE5TmBhP4WBT4NnjCiED04e",
+    "firstName": "weofinw",
+    "lastName": "oiweofi",
+    "emailAddress": "woifn2"
+  },
+  {
     "username": "123",
     "password": "$2a$10$uIOAZ13VEPpg3vZCUfaVoe.bXRA.l4dF4EfnBdT1G0bKASp8euXie",
     "firstName": "ewfw",
