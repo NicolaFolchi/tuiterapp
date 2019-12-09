@@ -9,5 +9,7 @@ TODOS:
 
 - <del>Create my backend server so the application will sustain by itself and develop the login/register capability. </del>
 - Prevent unauthorized users to access the application through the main url route.
+- Add routes for deleting own posts.
 - Keep sessions active for a period of time (cookie management).
+- Implement password stretching
 - Publish and host the application.
