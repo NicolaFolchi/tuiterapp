@@ -1,5 +1,26 @@
 [
   {
+    "username": "dani",
+    "password": "$2a$10$TvKp3LJOeDTQk14A8UNoV.qWjIblrbXKklDMyZtovezdeHXTLeK5u",
+    "firstName": "fwewef",
+    "lastName": "wfewfwgre",
+    "emailAddress": "gregetht"
+  },
+  {
+    "username": "nicola",
+    "password": "nicola",
+    "firstName": "wefew",
+    "lastName": "sfwef",
+    "emailAddress": "wefwefewf"
+  },
+  {
+    "username": "nico",
+    "password": "$2a$10$KzMtktDv0ZcVsiYMdn2lH.DSjfmfXya8uHfjAwWgRa0ZL11SlvKSu",
+    "firstName": "warw",
+    "lastName": "vwevew",
+    "emailAddress": "swefewf"
+  },
+  {
     "username": "Test77",
     "password": "$2a$10$uyQIH9zG9fw9kJQE/lX3Fe8annAyYbR.Am3bOH2L7EpKOS7/2.edW",
     "firstName": "Test7",

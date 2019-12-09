@@ -13,7 +13,7 @@ let usrsDB = JSON.parse(usrsData);
 console.log("server is up and running");
 
 let express = require("express");
-let app = express();
+
 // used to parse the request body
 let bodyParser = require("body-parser");
 // used for the creation of unique id's for tuiter posts
@@ -25,6 +25,8 @@ const User = require('./models/user').User;
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const passport = require('passport');
+
+let app = express();
 
 // initPassport(
 //     passport,
@@ -43,7 +45,7 @@ app.use(bodyParser.json());
 
 
 app.use(session({
-    secret: 'test',
+    secret: 'swofhigryaefqwn',
     resave: false,
     saveUninitialized: false
 }));
@@ -52,6 +54,7 @@ app.use(passport.session());
 
 // sending all of our posts data
 app.get('/tuits', function (request, response) {
+    console.log(request.session.user_id);
     response.send(db);
 });
 // sending all data from a specific post
@@ -73,7 +76,7 @@ app.post('/tuits', function (request, response) {
     console.log(request.user);
     // adding needed properties to my tuits
     request.body['id'] = shortid.generate();
-    request.body['author'] = request.user.firstName;
+    request.body['author'] = request.session.user_username;
     request.body['isLiked'] = false;
     request.body['retweetCount'] = 0;
     request.body['replyCount'] = 0;
@@ -122,6 +125,7 @@ app.post("/users", async function (request, response) {
     try {
         let username = request.body.user;
         let password = await bcrypt.hash(request.body.password, 10);
+        // let password = request.body.password;
         let fName = request.body.fName;
         let lName = request.body.lName;
         let email = request.body.email;
@@ -142,7 +146,10 @@ app.post("/users", async function (request, response) {
         });
         // creating user on mongodb
         let user = new User(userData);
-        user.save(function (){
+        user.save(function (err, user,){
+            if (err){
+                console.log(String(err));
+            }
             console.log('todo bien');
         })
         // created
@@ -155,27 +162,42 @@ app.post("/users", async function (request, response) {
 });
 
 // login process and user authorization
-app.post('/login', async function (request, response) {
-    let username = usrsDB.find(user => user.username === request.body.user);
-    if (username != null) {
-        try {
-            // comparing our stored hashed password with the password the user is trying to log in with
-            if (await bcrypt.compare(request.body.password, username.password)) {
-                response.status(200).send('Success, you are now logged in');
-                User.find(function(err,doc){
-                    console.log(doc);
-                })
-
-            } else {
-                response.status(400).send('Failed to log in, password incorrect');
-            }
-        } catch {
-            response.status(500).send();
+app.post('/login', function (request, response) {
+    
+    User.find({username:request.body.username}, async function(err,userd){
+        if (await bcrypt.compare(request.body.password, userd[0].password)) {
+            console.log(userd[0]._id);
+            request.session.user_id = userd[0]._id;
+            request.session.user_username = userd[0].username;
+            console.log(request.session.user_id);
+            response.redirect('/')
+            // response.send("HOLA MUNDO HERMOSO");
         }
-    }
-    else {
-        return response.status(404).send('User not found');
-    }
+    })
+    // User.find(function (err, doc) {
+    //     console.log(doc);
+    // });
+    
+    // let username = usrsDB.find(user => user.username === request.body.user);
+    // if (username != null) {
+    //     try {
+    //         // comparing our stored hashed password with the password the user is trying to log in with
+    //         if (await bcrypt.compare(request.body.password, username.password)) {
+    //             response.status(200).send('Success, you are now logged in');
+    //             User.find(function(err,doc){
+    //                 console.log(doc);
+    //             })
+
+    //         } else {
+    //             response.status(400).send('Failed to log in, password incorrect');
+    //         }
+    //     } catch {
+    //         response.status(500).send();
+    //     }
+    // }
+    // else {
+    //     return response.status(404).send('User not found');
+    // }
 });
 
 // ------------------ SPOTIFY API INTEGRATION ---------------------------

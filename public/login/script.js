@@ -8,7 +8,7 @@ function login() {
 
   let username = $("#userarea").val();
   let userpassword = $("#passwordarea").val();
-  let data = { "user": username, "password": userpassword };
+  let data = { "username": username, "password": userpassword };
   // const httpreq = async function () {
   //   let result = await axios({
   //     method: 'post',
