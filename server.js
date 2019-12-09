@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
@@ -146,8 +146,8 @@ app.post("/users", async function (request, response) {
         });
         // creating user on mongodb
         let user = new User(userData);
-        user.save(function (err, user,){
-            if (err){
+        user.save(function (err, user, ) {
+            if (err) {
                 console.log(String(err));
             }
             console.log('todo bien');
@@ -163,21 +163,31 @@ app.post("/users", async function (request, response) {
 
 // login process and user authorization
 app.post('/login', function (request, response) {
-    
-    User.find({username:request.body.username}, async function(err,userd){
-        if (await bcrypt.compare(request.body.password, userd[0].password)) {
-            console.log(userd[0]._id);
-            request.session.user_id = userd[0]._id;
-            request.session.user_username = userd[0].username;
-            console.log(request.session.user_id);
-            response.redirect('/')
-            // response.send("HOLA MUNDO HERMOSO");
+
+    User.find({ username: request.body.username }, async function (err, userd) {
+        if (!userd.length) {
+            return response.status(404).send('User not found');
+        }
+        try {
+            if (await bcrypt.compare(request.body.password, userd[0].password)) {
+                console.log(userd[0]._id);
+                request.session.user_id = userd[0]._id;
+                request.session.user_username = userd[0].username;
+                console.log(request.session.user_id);
+                return response.redirect('/')
+                // response.send("HOLA MUNDO HERMOSO");
+            } else {
+                response.status(400).send('Failed to log in, password incorrect');
+            }
+        } catch {
+            response.status(500).send("something weird happened  :s");
         }
     })
+
     // User.find(function (err, doc) {
     //     console.log(doc);
     // });
-    
+
     // let username = usrsDB.find(user => user.username === request.body.user);
     // if (username != null) {
     //     try {

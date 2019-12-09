@@ -40,7 +40,7 @@ function login() {
         }, 2000);
       } else {
         console.log(data);
-        $message.html(`<span class="has-text-danger">Something went wrong and you were not logged in. We got the error "${data.responseText}"  :(</span>`);
+        $message.html(`<span class="has-text-danger">Something went wrong and you were not logged in. We got the error "${data.responseText}"</span>`);
 
       }
     }

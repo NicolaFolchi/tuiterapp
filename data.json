@@ -1,12 +1,25 @@
 [
   {
+    "type": "reply",
+    "parent": "wWpnwYFI",
+    "body": "IT DID :))))))))))))))))))) THANK YOU LORD<br><strong>Reply to:</strong> @dani<p>if this works I'll be so happy and so appreciative!!</p>",
+    "id": "kz9rt6ef",
+    "author": "Nico :)",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-09T07:04:27.015Z"
+  },
+  {
     "type": "tweet",
     "body": "if this works I'll be so happy and so appreciative!!",
     "id": "wWpnwYFI",
     "author": "dani",
     "isLiked": false,
     "retweetCount": 0,
-    "replyCount": 0,
+    "replyCount": 1,
     "likeCount": 0,
     "someLikes": 0,
     "createdAt": "2019-12-09T06:58:47.010Z"
