@@ -1,6 +1,56 @@
 [
   {
     "type": "tweet",
+    "body": "hehe",
+    "id": "ec9WmoQW",
+    "author": "Nico :)",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-09T08:18:40.952Z"
+  },
+  {
+    "type": "reply",
+    "parent": "4YwBQ9Tg",
+    "body": "We are good to gooooooo :))))))))))))))))))))))))))))))))))<br><strong>Reply to:</strong> @Nico :)<p>if this works, then its good to go :))) <br><strong>Reply to:</strong> @dani<p>test having two users logged in at the same time :)</p></p>",
+    "id": "UMXZ3Rd9",
+    "author": "dani",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 0,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-09T08:17:40.775Z"
+  },
+  {
+    "type": "reply",
+    "parent": "tkLK-V2d",
+    "body": "if this works, then its good to go :))) <br><strong>Reply to:</strong> @dani<p>test having two users logged in at the same time :)</p>",
+    "id": "4YwBQ9Tg",
+    "author": "Nico :)",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 1,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-09T08:17:22.625Z"
+  },
+  {
+    "type": "tweet",
+    "body": "test having two users logged in at the same time :)",
+    "id": "tkLK-V2d",
+    "author": "dani",
+    "isLiked": false,
+    "retweetCount": 0,
+    "replyCount": 1,
+    "likeCount": 0,
+    "someLikes": 0,
+    "createdAt": "2019-12-09T08:17:05.095Z"
+  },
+  {
+    "type": "tweet",
     "body": "hello",
     "id": "W9dSL5je",
     "author": "dani",

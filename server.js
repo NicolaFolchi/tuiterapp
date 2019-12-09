@@ -19,11 +19,14 @@ let bodyParser = require("body-parser");
 // used for the creation of unique id's for tuiter posts
 const shortid = require('shortid');
 
-const User = require('./models/user').User;
+
 
 
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
+const User = require('./models/user').User;
+const router_app = require('./routes_app');
+const session_middleware = require('./middlewares/session');
 const passport = require('passport');
 
 let app = express();
@@ -73,7 +76,7 @@ app.post('/tuits', function (request, response) {
         status: 'success',
         tuitData: request.body
     };
-    console.log(request.user);
+
     // adding needed properties to my tuits
     request.body['id'] = shortid.generate();
     request.body['author'] = request.session.user_username;
@@ -259,3 +262,6 @@ app.get('/getToken', function (req, res) {
 //         }
 //     });
 // });
+
+app.use('/app', session_middleware);
+app.use('/app', router_app);
