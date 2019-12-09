@@ -17,7 +17,7 @@ function login() {
     return $message.html(`<span class="has-text-danger">Your passwords must match  >:(</span>`);
   }
   let data = { 
-    "user": username,
+    "username": username,
     "password": userpassword ,
     "fName": fName,
     "lName": lName,
@@ -47,7 +47,7 @@ function login() {
         }, 2000);
       } else {
         console.log(data);
-        $message.html(`<span class="has-text-danger">Something went wrong and you were not logged in. We got the error "${data.responseText}"  :(</span>`);
+        $message.html(`<span class="has-text-danger">Something went wrong and you were not registered. We got the error "${data.responseText}"</span>`);
 
       }
     }

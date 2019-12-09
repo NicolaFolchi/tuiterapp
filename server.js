@@ -116,52 +116,52 @@ app.post('/tuits', function (request, response) {
 });
 // signing up process
 app.post("/users", async function (request, response) {
-    // finding on user database if username or email already exist
-    let checkExistingUsername = usrsDB.find(user => user.username == request.body.user);
-    let checkExistingEmail = usrsDB.find(user => user.emailAddress == request.body.email);
-    if (checkExistingUsername != null) {
-        return response.status(400).send("Username/email is being used :(");
-    }
-    if (checkExistingEmail != null) {
-        return response.status(400).send("Email is being used :(");
-    }
-    try {
-        let username = request.body.user;
-        let password = await bcrypt.hash(request.body.password, 10);
-        // let password = request.body.password;
-        let fName = request.body.fName;
-        let lName = request.body.lName;
-        let email = request.body.email;
-        let userData = {
-            username: username,
-            password: password,
-            firstName: fName,
-            lastName: lName,
-            emailAddress: email
-        };
+    // finding if username or email already exist on user database
+    User.find({$or:[{username: request.body.username}, {emailAddress: request.body.email}]}, async function (err, userd) {
+        if (!userd.length) {
+            try {
+                console.log(request.body.username);
+                console.log(request.body.email);
+                let username = request.body.username;
+                let password = await bcrypt.hash(request.body.password, 10);
+                // let password = request.body.password;
+                let fName = request.body.fName;
+                let lName = request.body.lName;
+                let email = request.body.email;
+                let userData = {
+                    username: username,
+                    password: password,
+                    firstName: fName,
+                    lastName: lName,
+                    emailAddress: email
+                };
 
-        // console.log(userData);
-        // adding as first element to json file
-        usrsDB.unshift(userData);
-        let data = JSON.stringify(usrsDB, null, 2);
-        fs.writeFile("users.json", data, function (err, result) {
-            if (err) console.log('error', err);
-        });
-        // creating user on mongodb
-        let user = new User(userData);
-        user.save(function (err, user, ) {
-            if (err) {
-                console.log(String(err));
+                // creating user on mongodb
+                let user = new User(userData);
+                user.save(function (err, user, ) {
+                    if (err) {
+                        console.log(String(err));
+                        response.status(400).send(String(err));
+                    } else {
+                        console.log('todo bien');
+                        // created
+                        response.status(201).send();
+                    }
+                })
+                // User.find(function (err, doc) {
+                // console.log(doc);
+                // });
+                // console.log(userd);
+
+            } catch {
+                // server issue :/
+                response.status(500).send();
             }
-            console.log('todo bien');
-        })
-        // created
-        response.status(201).send();
-
-    } catch {
-        // server issue :/
-        response.status(500).send();
-    }
+        } else {
+            console.log(userd);
+            response.status(400).send("Username/Email are being used  :/");
+        }
+    })
 });
 
 // login process and user authorization

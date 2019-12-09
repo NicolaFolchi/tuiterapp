@@ -1,5 +1,19 @@
 [
   {
+    "username": "Nip",
+    "password": "$2a$10$EGj3NpNNHD8TM5cnrN6scutDb9wMqREJAb8zUTyzBVxrfss9crZ3e",
+    "firstName": "Nicola",
+    "lastName": "Folchi",
+    "emailAddress": "wrongemailformattestre"
+  },
+  {
+    "username": "Nix",
+    "password": "$2a$10$Gmuu4WEr20QiIxML2.QT7.taZlYuuRYvFSEU/JQ3YvrbqmH3e6mDS",
+    "firstName": "Nicola",
+    "lastName": "Folchi",
+    "emailAddress": "wrongemailformattest"
+  },
+  {
     "username": "test for confirm password",
     "password": "$2a$10$0yahNeueN97S/eeJIl9ytOwBt9kJvHI9R2rykhyYzAOc92BAxJn3.",
     "firstName": "test",
