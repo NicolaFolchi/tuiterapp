@@ -216,56 +216,8 @@ app.post('/logout', function(request, response){
         }
         return response.status(200).send();
     });
-} )
-// ------------------ SPOTIFY API INTEGRATION ---------------------------
-
-const request = require('request');
-const client_id = 'af2ce6ca8d05496ebde76dff70598354';
-const client_secret = 'f0e685f8afc441d6954d0321d73698e3';
-
-// your application requests authorization
-let authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-    },
-    form: {
-        grant_type: 'client_credentials'
-    },
-    json: true
-};
-
-app.get('/getToken', function (req, res) {
-    request.post(authOptions, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-
-            // use the access token to access the Spotify Web API
-            let token = body.access_token;
-            res.send(token);
-        }
-    });
 });
-// app.post('/tuitts', function (req, res) {
-//     request.post(authOptions, function (error, response, body) {
-//         if (!error && response.statusCode === 200) {
 
-//             // use the access token to access the Spotify Web API
-//             let token = body.access_token;
-//             let options = {
-//                 url: `https://api.spotify.com/v1/albums/${req.body.albumid}`,
-//                 headers: {
-//                     'Authorization': 'Bearer ' + token
-//                 },
-//                 json: true
-//             };
-//             console.log(req.body.albumid);
-//             // console.log(body);
-//             request.get(options, function (error, response, body) {
-//                 console.log(body);
-//             });
-//         }
-//     });
-// });
 
 app.use('/app', session_middleware);
 app.use('/app', router_app);
